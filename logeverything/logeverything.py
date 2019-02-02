@@ -23,6 +23,7 @@ class LogEverything(Cog):
 
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
+        guild: discord.Guild = member.guild
 
         join_voice = before.channel is None and after.channel is not None
         left_voice = before.channel is not None and after.channel is None
@@ -32,6 +33,9 @@ class LogEverything(Cog):
 
         deafen = not before.deaf and after.deaf
         undeafen = before.deaf and not after.deaf
+
+        async for entry in guild.audit_logs(limit=1):
+            print('{0.user} did {0.action} to {0.target}'.format(entry))
 
         message = "{member} has been ".format(member=member.mention)
 
