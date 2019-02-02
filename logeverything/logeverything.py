@@ -45,6 +45,7 @@ class LogEverything(Cog):
             message += "undeafen"
         elif join_voice or left_voice:
             action = "joined" if join_voice else "left"
-            message = "{member} has {action} the voice channel: {channel}.".format(member=member.mention, action=action, channel=after.channel.name)
+            channel_name = after.channel.name if join_voice else before.channel.name
+            message = "{member} has {action} the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
 
         await channel.send(message)

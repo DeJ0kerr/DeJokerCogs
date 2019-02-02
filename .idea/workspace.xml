@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7b5f707d-868d-488f-84a1-6f568b0a655b" name="Default Changelist" comment="Stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="7b5f707d-868d-488f-84a1-6f568b0a655b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/logeverything/logeverything.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/logeverything.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,7 +33,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="106" />
-          <entry key="py" value="1497" />
+          <entry key="py" value="1572" />
           <entry key="txt" value="118" />
         </counts>
       </usages-collector>
@@ -42,7 +41,7 @@
         <counts>
           <entry key="JSON" value="106" />
           <entry key="PLAIN_TEXT" value="118" />
-          <entry key="Python" value="1497" />
+          <entry key="Python" value="1572" />
         </counts>
       </usages-collector>
     </session>
@@ -52,11 +51,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="40" column="32" lean-forward="true" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+            <state relative-caret-position="721">
+              <caret line="47" column="66" lean-forward="true" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
-                <marker date="1549145582067" expanded="true" signature="510:519" ph="..." />
+                <marker date="1549145690259" expanded="true" signature="510:519" ph="..." />
               </folding>
             </state>
           </provider>
@@ -209,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549138467850</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Stuff">
+      <created>1549145608075</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1549145608075</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -291,11 +297,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="40" column="32" lean-forward="true" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+        <state relative-caret-position="721">
+          <caret line="47" column="66" lean-forward="true" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1549145582067" expanded="true" signature="510:519" ph="..." />
+            <marker date="1549145690259" expanded="true" signature="510:519" ph="..." />
           </folding>
         </state>
       </provider>
