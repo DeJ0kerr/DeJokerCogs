@@ -42,7 +42,6 @@ class LogEverything(Cog):
         undeafen = before.deaf and not after.deaf
 
         action = ""
-        user: discord.Member = await LogEverything.get_last_log_user(guild)
         message = "{member} has been {action} by {user}."
 
         if muted:
@@ -55,8 +54,9 @@ class LogEverything(Cog):
             action = "undeafen"
         elif join_voice or left_voice or moved_voice:
             action = "connected" if join_voice else "disconnected" if left_voice else "moved"
-            channel_name = after.channel.name if join_voice else before.channel.name
+            channel_name = before.channel.name if left_voice else after.channel.name
             message = "{member} has been {action} to the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
 
+        user: discord.Member = await LogEverything.get_last_log_user(guild)
         message = message.format(member=member.mention, action=action, user=user.mention)
         await channel.send(message)

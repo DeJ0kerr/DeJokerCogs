@@ -34,7 +34,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="106" />
-          <entry key="py" value="2593" />
+          <entry key="py" value="2781" />
           <entry key="txt" value="118" />
         </counts>
       </usages-collector>
@@ -42,7 +42,7 @@
         <counts>
           <entry key="JSON" value="106" />
           <entry key="PLAIN_TEXT" value="118" />
-          <entry key="Python" value="2593" />
+          <entry key="Python" value="2781" />
         </counts>
       </usages-collector>
     </session>
@@ -52,12 +52,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="738">
-              <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+            <state relative-caret-position="636">
+              <caret line="52" column="22" lean-forward="true" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
-                <marker date="1549151292831" expanded="true" signature="508:517" ph="..." />
-                <marker date="1549151292831" expanded="true" signature="821:827" ph="..." />
+                <marker date="1549151914962" expanded="true" signature="508:517" ph="..." />
+                <marker date="1549151914962" expanded="true" signature="821:827" ph="..." />
               </folding>
             </state>
           </provider>
@@ -287,7 +287,21 @@
       <option name="project" value="LOCAL" />
       <updated>1549151247485</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Stuff">
+      <created>1549151299653</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1549151299653</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Stuff">
+      <created>1549151789153</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1549151789153</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -383,12 +397,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+        <state relative-caret-position="636">
+          <caret line="52" column="22" lean-forward="true" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1549151292831" expanded="true" signature="508:517" ph="..." />
-            <marker date="1549151292831" expanded="true" signature="821:827" ph="..." />
+            <marker date="1549151914962" expanded="true" signature="508:517" ph="..." />
+            <marker date="1549151914962" expanded="true" signature="821:827" ph="..." />
           </folding>
         </state>
       </provider>
