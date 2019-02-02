@@ -56,5 +56,5 @@ class LogEverything(Cog):
             channel_name = after.channel.name if join_voice else before.channel.name
             message = "{member} has been {action} to the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
 
-        message.format(member=member.mention, action=action, user=user.mention)
+        message = message.format(member=member.mention, action=action, user=user.mention)
         await channel.send(message)
