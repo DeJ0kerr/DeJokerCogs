@@ -21,18 +21,16 @@ class LogEverything(Cog):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         # await channel.send("before {} after {}".format(before.display_name, after.display_name))
 
-    async def on_voice_state_update(self, member: discord.Member, before: discord.Member, after: discord.Member):
+    async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
-        before_state: discord.VoiceState = before.voice
-        after_state: discord.VoiceState = after.voice
 
-        muted = not before_state.mute and after_state.mute
-        unmuted = before_state.mute and not after_state.mute
+        muted = not before.mute and after.mute
+        unmuted = before.mute and not after.mute
 
-        deafen = not before_state.deaf and after_state.deaf
-        undeafen = before_state.deaf and not after_state.deaf
+        deafen = not before.deaf and after.deaf
+        undeafen = before.deaf and not after.deaf
 
-        message = "{member} has been ".format(member=after.mention)
+        message = "{member} has been ".format(member=member.mention)
 
         if muted:
             message += "muted"
@@ -43,5 +41,4 @@ class LogEverything(Cog):
         elif undeafen:
             message += "undeafen"
 
-        message += "by {member}.".format(member=member.mention)
         await channel.send(message)
