@@ -20,6 +20,10 @@ class LogEverything(Cog):
     async def on_member_update(self, before: discord.Member, after: discord.Member):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         guild: discord.Guild = before.guild if before.guild is not None else after.guild
+        await LogEverything.print_last_log(guild)
+
+    @staticmethod
+    async def print_last_log(self, guild):
         async for entry in guild.audit_logs(limit=1):
             entry: discord.AuditLogEntry
             action: discord.AuditLogAction = entry.action
@@ -27,11 +31,13 @@ class LogEverything(Cog):
             target: discord.Member = entry.target
             print('{user} did {action} to {target}'.format(user=user.mention, action=action.name, target=target.mention))
 
-    """async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
+    async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         guild: discord.Guild = member.guild
 
-        join_voice = before.channel is None and after.channel is not None
+        await LogEverything.print_last_log(guild)
+
+        """join_voice = before.channel is None and after.channel is not None
         left_voice = before.channel is not None and after.channel is None
 
         muted = not before.mute and after.mute
