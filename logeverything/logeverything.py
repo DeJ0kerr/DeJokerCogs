@@ -24,6 +24,9 @@ class LogEverything(Cog):
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
 
+        join_voice = before.channel is None and after.channel is not None
+        left_voice = before.channel is not None and after.channel is None
+
         muted = not before.mute and after.mute
         unmuted = before.mute and not after.mute
 
@@ -40,5 +43,8 @@ class LogEverything(Cog):
             message += "deafen"
         elif undeafen:
             message += "undeafen"
+        elif join_voice or left_voice:
+            action = "joined" if join_voice else "left"
+            message = "{member} has {action} the voice channel: {channel}.".format(member=member.mention, action=action, channel=after.channel.name)
 
         await channel.send(message)
