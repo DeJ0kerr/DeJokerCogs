@@ -1,4 +1,5 @@
 from typing import Any
+
 import discord
 from redbot.core import commands
 from redbot.core.bot import Red
@@ -17,7 +18,3 @@ class LogEverything(Cog):
         await channel.send(channel.id)
 
     # def on_member_update(self, before, after):
-
-
-def setup(bot):
-    bot.add_cog(LogEverything(bot))
