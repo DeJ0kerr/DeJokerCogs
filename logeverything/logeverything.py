@@ -33,6 +33,8 @@ class LogEverything(Cog):
         join_voice = before.channel is None and after.channel is not None
         left_voice = before.channel is not None and after.channel is None
 
+        moved_voice = before.channel is not None and after.channel is not None and after.channel is not before.channel
+
         muted = not before.mute and after.mute
         unmuted = before.mute and not after.mute
 
@@ -51,8 +53,8 @@ class LogEverything(Cog):
             action = "deafen"
         elif undeafen:
             action = "undeafen"
-        elif join_voice or left_voice:
-            action = "connected" if join_voice else "disconnected"
+        elif join_voice or left_voice or moved_voice:
+            action = "connected" if join_voice else "disconnected" if left_voice else "moved"
             channel_name = after.channel.name if join_voice else before.channel.name
             message = "{member} has been {action} to the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
 
