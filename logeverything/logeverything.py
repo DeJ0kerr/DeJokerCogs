@@ -17,11 +17,17 @@ class LogEverything(Cog):
         channel: discord.DMChannel = ctx.channel
         await channel.send(channel.id)
 
-    # async def on_member_update(self, before: discord.Member, after: discord.Member):
-        # channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
-        # await channel.send("before {} after {}".format(before.display_name, after.display_name))
+    async def on_member_update(self, before: discord.Member, after: discord.Member):
+        channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
+        guild: discord.Guild = before.guild if before.guild is not None else after.guild
+        async for entry in guild.audit_logs(limit=1):
+            entry: discord.AuditLogEntry
+            action: discord.AuditLogAction = entry.action
+            user: discord.Member = entry.user
+            target: discord.Member = entry.target
+            print('{user} did {action} to {target}'.format(user=user.mention, action=action.name, target=target.mention))
 
-    async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
+    """async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         guild: discord.Guild = member.guild
 
@@ -34,8 +40,7 @@ class LogEverything(Cog):
         deafen = not before.deaf and after.deaf
         undeafen = before.deaf and not after.deaf
 
-        async for entry in guild.audit_logs(limit=1):
-            print('{0.user} did {0.action} to {0.target}'.format(entry))
+
 
         message = "{member} has been ".format(member=member.mention)
 
@@ -52,4 +57,4 @@ class LogEverything(Cog):
             channel_name = after.channel.name if join_voice else before.channel.name
             message = "{member} has {action} the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
 
-        await channel.send(message)
+        await channel.send(message)"""
