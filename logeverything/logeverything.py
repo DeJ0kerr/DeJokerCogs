@@ -44,4 +44,4 @@ class LogEverything(Cog):
             message += "undeafen"
 
         message += "by TODO."
-        channel.send(message)
+        await channel.send(message)
