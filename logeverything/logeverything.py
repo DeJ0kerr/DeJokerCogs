@@ -23,18 +23,9 @@ class LogEverything(Cog):
         await LogEverything.print_last_log(guild)
 
     @staticmethod
-    async def print_last_log(guild):
+    async def get_last_log_user(guild):
         async for entry in guild.audit_logs(limit=1):
-            entry: discord.AuditLogEntry
-            action: discord.AuditLogAction = entry.action
-            user: discord.Member = entry.user
-            target: discord.Member = entry.target
-            reason: str = entry.reason
-
-            if action is discord.AuditLogAction.member_update:
-                print("asgasdasd")
-
-            print('{user} did {action} to {target}'.format(user=user.mention, action=action, target=target.mention))
+            return entry.user
 
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
@@ -42,7 +33,7 @@ class LogEverything(Cog):
 
         await LogEverything.print_last_log(guild)
 
-        """join_voice = before.channel is None and after.channel is not None
+        join_voice = before.channel is None and after.channel is not None
         left_voice = before.channel is not None and after.channel is None
 
         muted = not before.mute and after.mute
@@ -51,21 +42,22 @@ class LogEverything(Cog):
         deafen = not before.deaf and after.deaf
         undeafen = before.deaf and not after.deaf
 
-
-
-        message = "{member} has been ".format(member=member.mention)
+        action = ""
+        user: discord.Member = await LogEverything.get_last_log_user(guild)
+        message = "{member} has been {action} by {user}."
 
         if muted:
-            message += "muted"
+            action = "muted"
         elif unmuted:
-            message += "unmuted"
+            action = "unmuted"
         elif deafen:
-            message += "deafen"
+            action = "deafen"
         elif undeafen:
-            message += "undeafen"
+            action = "undeafen"
         elif join_voice or left_voice:
-            action = "joined" if join_voice else "left"
+            action = "connected" if join_voice else "disconnected"
             channel_name = after.channel.name if join_voice else before.channel.name
-            message = "{member} has {action} the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
+            message = "{member} has been {action} to the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
 
-        await channel.send(message)"""
+        message.format(member=member.mention, action=action, user=user.mention)
+        await channel.send(message)
