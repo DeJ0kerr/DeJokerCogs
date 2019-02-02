@@ -31,7 +31,7 @@ class LogEverything(Cog):
             target: discord.Member = entry.target
             reason: str = entry.reason
 
-            if entry is discord.AuditLogAction.member_update:
+            if type(entry) is discord.AuditLogAction.member_update:
                 print("asgasdasd")
 
             print('{user} did {action} to {target}'.format(user=user.mention, action=action, target=target.mention))
