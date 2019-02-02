@@ -1,0 +1,15 @@
+{
+    "AUTHOR" : "DeJoker",
+    "DESCRIPTION" : "Pretty much logs everything",
+    "INSTALL_MSG" : "Thank you for installing LogEverything!",
+    "NAME" : "LogEverything",
+    "REQUIREMENTS" : [],
+    "SHORT" : "Basically logs everything",
+    "TAGS" : [
+        "utilities",
+        "must-have",
+        "tools",
+        "logs",
+        "log"
+    ]
+}
