@@ -19,3 +19,6 @@ class LogEverything(Cog):
 
     # def on_member_update(self, before, after):
 
+
+def setup(bot):
+    bot.add_cog(LogEverything(bot))
