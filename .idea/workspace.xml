@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b5f707d-868d-488f-84a1-6f568b0a655b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logeverything/logeverything.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/logeverything.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,7 +33,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="106" />
-          <entry key="py" value="911" />
+          <entry key="py" value="915" />
           <entry key="txt" value="118" />
         </counts>
       </usages-collector>
@@ -42,7 +41,7 @@
         <counts>
           <entry key="JSON" value="106" />
           <entry key="PLAIN_TEXT" value="118" />
-          <entry key="Python" value="911" />
+          <entry key="Python" value="915" />
         </counts>
       </usages-collector>
     </session>
@@ -52,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="340">
+              <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -290,8 +289,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="340">
+          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
