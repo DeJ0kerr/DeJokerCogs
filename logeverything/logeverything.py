@@ -20,7 +20,6 @@ class LogEverything(Cog):
     async def on_member_update(self, before: discord.Member, after: discord.Member):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         guild: discord.Guild = before.guild if before.guild is not None else after.guild
-        await LogEverything.print_last_log(guild)
 
     @staticmethod
     async def get_last_log_user(guild):
@@ -30,8 +29,6 @@ class LogEverything(Cog):
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         guild: discord.Guild = member.guild
-
-        await LogEverything.print_last_log(guild)
 
         join_voice = before.channel is None and after.channel is not None
         left_voice = before.channel is not None and after.channel is None
