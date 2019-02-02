@@ -23,12 +23,13 @@ class LogEverything(Cog):
         await LogEverything.print_last_log(guild)
 
     @staticmethod
-    async def print_last_log(self, guild):
+    async def print_last_log(guild):
         async for entry in guild.audit_logs(limit=1):
             entry: discord.AuditLogEntry
             action: discord.AuditLogAction = entry.action
             user: discord.Member = entry.user
             target: discord.Member = entry.target
+            reason: str = entry.reason
             print('{user} did {action} to {target}'.format(user=user.mention, action=action.name, target=target.mention))
 
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
