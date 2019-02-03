@@ -22,13 +22,20 @@ class LogEverything(Cog):
         guild: discord.Guild = before.guild if before.guild is not None else after.guild
 
         nickname_changed = before.nick is not after.nick
+        nickname_removed = nickname_changed and after.nick is None
+        nickname_created = nickname_changed and before.nick is None
+
         roles_changed = before.roles is not after.roles
 
         user: discord.Member = await LogEverything.get_last_log_user(guild)
         message = "TODO: add logs to this"
 
-        if nickname_changed:
+        if nickname_changed and not nickname_removed and not nickname_created:
             message = "{member} nickname has been changed from {old} to {new} by {user}".format(member=after.mention, old=before.nick, new=after.nick, user=user.mention)
+        elif nickname_created:
+            message = "{member} nickname has been set to {new} by {user}".format(member=after.mention, new=after.nick, user=user.mention)
+        elif nickname_removed:
+            message = "{member} nickname has been removed from {old} by {user}".format(member=after.mention, old=before.nick, user=user.mention)
         elif roles_changed:
             message = "TODO: add role change message"
 
