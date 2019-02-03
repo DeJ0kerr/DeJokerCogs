@@ -55,28 +55,34 @@ class LogEverything(Cog):
 
         moved_voice = before.channel is not None and after.channel is not None and after.channel is not before.channel
 
+        self_muted = not before.self_mute and after.self_mute
+        self_unmuted = before.self_mute and not after.self_mute
+
+        self_deafen = not before.self_deaf and after.self_deaf
+        self_undeafen = before.self_deaf and not after.self_deaf
+
         muted = not before.mute and after.mute
         unmuted = before.mute and not after.mute
 
         deafen = not before.deaf and after.deaf
         undeafen = before.deaf and not after.deaf
 
-        action = ""
-        message = "{member} has been {action} by {user}."
+        if muted or unmuted or deafen or undeafen:
+            message = "{member} has been **{action}** by {user}."
+            action = "muted" if muted else "unmuted" if unmuted else "deafen" if deafen else "undeafen"
+            user: discord.Member = await LogEverything.get_last_log_user(guild)
+            message = message.format(member=member.mention, action=action, user=user.mention)
 
-        if muted:
-            action = "muted"
-        elif unmuted:
-            action = "unmuted"
-        elif deafen:
-            action = "deafen"
-        elif undeafen:
-            action = "undeafen"
+        elif self_muted or self_deafen or self_unmuted or self_undeafen:
+            message = "{member} has **self {action}** themselves."
+            action = "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen"
+            user: discord.Member = await LogEverything.get_last_log_user(guild)
+            message = message.format(member=member.mention, action=action, user=user.mention)
+
         elif join_voice or left_voice or moved_voice:
+            message = "{member} has {action} the voice channel: {channel}."
             action = "connected" if join_voice else "disconnected" if left_voice else "moved to"
             channel_name = before.channel.name if left_voice else after.channel.name
-            message = "{member} has {action} the voice channel: {channel}.".format(member=member.mention, action=action, channel=channel_name)
+            message = message.format(member=member.mention, action=action, channel=channel_name)
 
-        user: discord.Member = await LogEverything.get_last_log_user(guild)
-        message = message.format(member=member.mention, action=action, user=user.mention)
         await channel.send(message)
