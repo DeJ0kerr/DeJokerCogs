@@ -34,15 +34,15 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="106" />
-          <entry key="py" value="3793" />
-          <entry key="txt" value="118" />
+          <entry key="py" value="4079" />
+          <entry key="txt" value="180" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="106" />
-          <entry key="PLAIN_TEXT" value="118" />
-          <entry key="Python" value="3793" />
+          <entry key="PLAIN_TEXT" value="180" />
+          <entry key="Python" value="4079" />
         </counts>
       </usages-collector>
     </session>
@@ -52,12 +52,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="78" column="63" selection-start-line="78" selection-start-column="63" selection-end-line="78" selection-end-column="63" />
+            <state relative-caret-position="585">
+              <caret line="88" column="222" selection-start-line="88" selection-start-column="222" selection-end-line="88" selection-end-column="222" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
-                <marker date="1549191521142" expanded="true" signature="508:517" ph="..." />
-                <marker date="1549191521142" expanded="true" signature="1906:1912" ph="..." />
+                <marker date="1549194254986" expanded="true" signature="508:517" ph="..." />
+                <marker date="1549194254986" expanded="true" signature="1906:2271" ph="..." />
               </folding>
             </state>
           </provider>
@@ -336,7 +336,21 @@
       <option name="project" value="LOCAL" />
       <updated>1549153004372</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Added self muted/deafen">
+      <created>1549191555192</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1549191555192</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Fix for client deaf button">
+      <created>1549193706836</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1549193706836</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -370,7 +384,9 @@
     <MESSAGE value="Implemented __init__.py" />
     <MESSAGE value="first event" />
     <MESSAGE value="Stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stuff" />
+    <MESSAGE value="Added self muted/deafen" />
+    <MESSAGE value="Fix for client deaf button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix for client deaf button" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -432,12 +448,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="78" column="63" selection-start-line="78" selection-start-column="63" selection-end-line="78" selection-end-column="63" />
+        <state relative-caret-position="585">
+          <caret line="88" column="222" selection-start-line="88" selection-start-column="222" selection-end-line="88" selection-end-column="222" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1549191521142" expanded="true" signature="508:517" ph="..." />
-            <marker date="1549191521142" expanded="true" signature="1906:1912" ph="..." />
+            <marker date="1549194254986" expanded="true" signature="508:517" ph="..." />
+            <marker date="1549194254986" expanded="true" signature="1906:2271" ph="..." />
           </folding>
         </state>
       </provider>

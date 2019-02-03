@@ -86,7 +86,7 @@ class LogEverything(Cog):
 
         elif self_muted or self_deafen or self_unmuted or self_undeafen or self_deafen_and_mute or self_undeafen_and_unmute:
             message = "{member} has **self {action}** themselves."
-            action = "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen" if undeafen else "muted and deafen" if self_deafen_and_mute else "unmuted and undeafen"
+            action = "muted and deafen" if self_deafen_and_mute else "unmuted and undeafen" if self_undeafen_and_unmute else "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen"
             user: discord.Member = await LogEverything.get_last_log_user(guild)
             message = message.format(member=member.mention, action=action, user=user.mention)
 
