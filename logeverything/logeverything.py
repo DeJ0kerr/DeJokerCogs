@@ -69,7 +69,7 @@ class LogEverything(Cog):
         self_deafen = not before.self_deaf and after.self_deaf
         self_undeafen = before.self_deaf and not after.self_deaf
 
-        self_deafen_and_mute = self_muted and self_muted
+        self_deafen_and_mute = self_muted and self_deafen
         self_undeafen_and_unmute = self_unmuted and self_undeafen
 
         muted = not before.mute and after.mute
