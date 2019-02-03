@@ -46,6 +46,14 @@ class LogEverything(Cog):
         async for entry in guild.audit_logs(limit=1):
             return entry.user
 
+    """
+    Called when a Member changes their VoiceState.
+    The following, but not limited to, examples illustrate when this event is called:
+        A member joins a voice room. V
+        A member leaves a voice room. V
+        A member is muted or deafened by their own accord. V
+        A member is muted or deafened by a guild administrator. V
+    """
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
         guild: discord.Guild = member.guild
@@ -61,6 +69,9 @@ class LogEverything(Cog):
         self_deafen = not before.self_deaf and after.self_deaf
         self_undeafen = before.self_deaf and not after.self_deaf
 
+        self_deafen_and_mute = self_muted and self_muted
+        self_undeafen_and_unmute = self_unmuted and self_undeafen
+
         muted = not before.mute and after.mute
         unmuted = before.mute and not after.mute
 
@@ -73,9 +84,9 @@ class LogEverything(Cog):
             user: discord.Member = await LogEverything.get_last_log_user(guild)
             message = message.format(member=member.mention, action=action, user=user.mention)
 
-        elif self_muted or self_deafen or self_unmuted or self_undeafen:
+        elif self_muted or self_deafen or self_unmuted or self_undeafen or self_deafen_and_mute or self_undeafen_and_unmute:
             message = "{member} has **self {action}** themselves."
-            action = "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen"
+            action = "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen" if undeafen else "muted and deafen" if self_deafen_and_mute else "unmuted and undeafen"
             user: discord.Member = await LogEverything.get_last_log_user(guild)
             message = message.format(member=member.mention, action=action, user=user.mention)
 
