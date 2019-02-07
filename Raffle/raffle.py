@@ -23,7 +23,7 @@ class RaffleMain(Cog):
     @checks.mod()
     @raffle.command(name="create")
     async def create_raffle(self, ctx: commands.Context, keyword, amount: int):
-        channel: discord.DMChannel = ctx.channel
+        channel: discord.TextChannel = ctx.channel
 
         if not isinstance(amount, int):
             raise TypeError("Ticket price must be of type int, not {}.".format(type(amount)))
@@ -52,7 +52,7 @@ class RaffleMain(Cog):
 
     @raffle.command(name="join")
     async def join_raffle(self, ctx: commands.Context, keyword):
-        channel: discord.DMChannel = ctx.channel
+        channel: discord.TextChannel = ctx.channel
         member: discord.Member = ctx.author
 
         raffle: Raffle = self.raffles.get(keyword)
@@ -88,7 +88,7 @@ class RaffleMain(Cog):
     @checks.mod()
     @raffle.command(name="winner")
     async def winner_raffle(self, ctx: commands.Context, keyword):
-        channel: discord.DMChannel = ctx.channel
+        channel: discord.TextChannel = ctx.channel
         member: discord.Member = ctx.author
 
         raffle: Raffle = self.raffles.get(keyword)
@@ -115,7 +115,7 @@ class RaffleMain(Cog):
 
     @raffle.command(name="list")
     async def member_list_raffle(self, ctx: commands.Context, keyword=None):
-        channel: discord.DMChannel = ctx.channel
+        channel: discord.TextChannel = ctx.channel
         member: discord.Member = ctx.author
 
         if keyword is None:

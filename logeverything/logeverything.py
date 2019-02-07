@@ -1,99 +1,99 @@
-from typing import Any
-
 import discord
+import time
+import asyncio
+from logeverything.AuditManager import AuditManager
+from logeverything.CommandManager import CommandManager
+from logeverything.EventManager import EventManager
+from redbot.core import modlog
 from redbot.core import commands
+from redbot.core import Config
 from redbot.core.bot import Red
 
-Cog: Any = getattr(commands, "Cog", object)
 
-
-class LogEverything(Cog):
-
+class LogEverything(CommandManager, EventManager, commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
+        self.config: Config = Config.get_conf(self, 217681978223)
+        self.config.register_guild(
+            log_status_change=False,
+            log_activity_change=False,
+            log_avatar_change=False,
+            log_nickname_change=False,
+            log_role_change=True,
+            log_join_leave_voice=False,
+            log_mute=True,
+            log_deafen=True,
+            log_self_mute=False,
+            log_self_deafen=False,
+            log_delete_message=False,
+            log_member_join=True,
+            log_member_leave=True,
+            log_member_ban=True,
+            log_member_unban=True,
+            disable_modlog=True,
+            log_guild_settings=True,
+            channel_log=None
+        )
+        super().__init__(self.bot, self.config, self)
 
-    @commands.command(name="channelid")
-    async def channel_id_cmd(self, ctx: commands.Context):
-        channel: discord.DMChannel = ctx.channel
-        await channel.send(channel.id)
-
-    async def on_member_update(self, before: discord.Member, after: discord.Member):
-        channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
-        guild: discord.Guild = before.guild if before.guild is not None else after.guild
-
-        nickname_changed = before.nick is not after.nick
-        nickname_removed = nickname_changed and after.nick is None
-        nickname_created = nickname_changed and before.nick is None
-
-        roles_changed = before.roles is not after.roles
-
-        user: discord.Member = await LogEverything.get_last_log_user(guild)
-        message = "TODO: add logs to this"
-
-        if nickname_changed and not nickname_removed and not nickname_created:
-            message = "{member} nickname has been changed from **{old}** to **{new}** by {user}".format(member=after.mention, old=before.nick, new=after.nick, user=user.mention)
-        elif nickname_created:
-            message = "{member} nickname has been set to **{new}** by {user}".format(member=after.mention, new=after.nick, user=user.mention)
-        elif nickname_removed:
-            message = "{member} nickname has been removed by {user}".format(member=after.mention, old=before.nick, user=user.mention)
-        elif roles_changed:
-            message = "TODO: add role change message"
-
-        await channel.send(message)
+    async def startup(self):
+        for g in self.bot.guilds:
+            if await self.config.guild(g).disable_modlog():
+                try:
+                    await modlog.get_modlog_channel(g)
+                except RuntimeError:
+                    pass
+                else:
+                    prefix = await self.bot.db.prefix()
+                    await self.print_log("Disabling modlog cog. ``{prefix}logset modlogcog to change``".format(prefix=prefix[0]), g)
+                    await modlog.set_modlog_channel(g, None)
 
     @staticmethod
-    async def get_last_log_user(guild):
-        async for entry in guild.audit_logs(limit=1):
-            return entry.user
+    async def disable_modlog_cog(guild):
+        await modlog.set_modlog_channel(guild, None)
 
-    """
-    Called when a Member changes their VoiceState.
-    The following, but not limited to, examples illustrate when this event is called:
-        A member joins a voice room. V
-        A member leaves a voice room. V
-        A member is muted or deafened by their own accord. V
-        A member is muted or deafened by a guild administrator. V
-    """
-    async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
-        channel: discord.DMChannel = self.bot.get_channel(id=520225411070689280)
-        guild: discord.Guild = member.guild
+    async def is_channel_set(self, guild: discord.Guild):
+        channel_id = await self.config.guild(guild).channel_log()
+        channel: discord.TextChannel = guild.get_channel(channel_id)
+        return channel is not None
 
-        join_voice = before.channel is None and after.channel is not None
-        left_voice = before.channel is not None and after.channel is None
+    async def print_log(self, message: str, guild: discord.Guild):
+        if not await self.is_channel_set(guild):
+            prefix = await self.bot.db.prefix()
+            print("Use \"{prefix}logset logchannel #yourchannel\" In order to start using LogEverything Cog.".format(
+                prefix=prefix[0]))
+            return
 
-        moved_voice = before.channel is not None and after.channel is not None and after.channel is not before.channel
+        channel_id = await self.config.guild(guild).channel_log()
+        channel = guild.get_channel(channel_id)
 
-        self_muted = not before.self_mute and after.self_mute
-        self_unmuted = before.self_mute and not after.self_mute
-
-        self_deafen = not before.self_deaf and after.self_deaf
-        self_undeafen = before.self_deaf and not after.self_deaf
-
-        self_deafen_and_mute = self_muted and self_deafen
-        self_undeafen_and_unmute = self_unmuted and self_undeafen
-
-        muted = not before.mute and after.mute
-        unmuted = before.mute and not after.mute
-
-        deafen = not before.deaf and after.deaf
-        undeafen = before.deaf and not after.deaf
-
-        if muted or unmuted or deafen or undeafen:
-            message = "{member} has been **{action}** by {user}."
-            action = "muted" if muted else "unmuted" if unmuted else "deafen" if deafen else "undeafen"
-            user: discord.Member = await LogEverything.get_last_log_user(guild)
-            message = message.format(member=member.mention, action=action, user=user.mention)
-
-        elif self_muted or self_deafen or self_unmuted or self_undeafen or self_deafen_and_mute or self_undeafen_and_unmute:
-            message = "{member} has **self {action}** themselves."
-            action = "muted and deafen" if self_deafen_and_mute else "unmuted and undeafen" if self_undeafen_and_unmute else "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen"
-            user: discord.Member = await LogEverything.get_last_log_user(guild)
-            message = message.format(member=member.mention, action=action, user=user.mention)
-
-        elif join_voice or left_voice or moved_voice:
-            message = "{member} has {action} the voice channel: {channel}."
-            action = "connected" if join_voice else "disconnected" if left_voice else "moved to"
-            channel_name = before.channel.name if left_voice else after.channel.name
-            message = message.format(member=member.mention, action=action, channel=channel_name)
-
+        if message == "":
+            return
+        message = message.replace("\n", "\n\t\t\t\t\t")
+        message = "[{time}] ".format(time=time.strftime("%H:%M:%S")) + message
         await channel.send(message)
+
+    # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
+    @staticmethod
+    async def get_audit_log(guild, action: discord.AuditLogAction, target) -> discord.AuditLogEntry:
+        await asyncio.sleep(0.5)
+        async for entry in guild.audit_logs(action=action):
+            if entry.target.id == target.id:
+                return entry
+
+    # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
+    @staticmethod
+    async def get_last_audit_entry(guild) -> discord.AuditLogEntry:
+        await asyncio.sleep(0.5)
+        async for entry in guild.audit_logs(limit=1):
+            return entry
+
+    @staticmethod
+    async def get_last_log_user(guild) -> discord.Member:
+        entry = await AuditManager.get_last_audit_entry(guild)
+        return entry.user
+
+    @staticmethod
+    async def get_last_audit_action(guild) -> discord.AuditLogAction:
+        entry = await AuditManager.get_last_audit_entry(guild)
+        return entry.action

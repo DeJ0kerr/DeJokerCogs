@@ -1,5 +1,7 @@
 from logeverything.logeverything import LogEverything
 
 
-def setup(bot):
-    bot.add_cog(LogEverything(bot))
+async def setup(bot):
+    cog = LogEverything(bot)
+    bot.add_cog(cog)
+    await cog.startup()

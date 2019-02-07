@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pydocstyleEnabled": false,
+    "python.pythonPath": "C:\\Users\\ErezCS\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe"
+}

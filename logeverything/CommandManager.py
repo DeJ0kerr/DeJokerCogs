@@ -1,259 +1,228 @@
 import discord
-import asyncio
-from logeverything.AuditManager import AuditManager
+from redbot.core import commands
+from redbot.core import checks
 from redbot.core import Config
 from redbot.core.bot import Red
 
 
 class CommandManager:
 
-    def __init__(self, bot):
-        self.bot: Red
-        self.config: Config
+    def __init__(self, bot: Red, config: Config, main):
+        self.bot: Red = bot
+        self.config: Config = config
+        self.main = main
 
-    # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
-    @staticmethod
-    async def get_audit_log(guild, action: discord.AuditLogAction, target) -> discord.AuditLogEntry:
-        await asyncio.sleep(0.5)
-        async for entry in guild.audit_logs(action=action):
-            if entry.target.id == target.id:
-                return entry
+    @commands.group(name="logset")
+    @commands.guild_only()
+    @checks.guildowner_or_permissions()
+    async def logset(self, ctx: commands.Context):
+        """
+        LogEverything Configuration Options
 
-    # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
-    @staticmethod
-    async def get_last_audit_entry(guild) -> discord.AuditLogEntry:
-        await asyncio.sleep(0.5)
-        async for entry in guild.audit_logs(limit=1):
-            return entry
+        Use ``[p]logset <option> <True/False>``
+        """
+        pass
 
-    @staticmethod
-    async def get_last_log_user(guild) -> discord.Member:
-        entry = await AuditManager.get_last_audit_entry(guild)
-        return entry.user
+    @logset.command(name="logchannel")
+    async def set_log_channel(self, ctx: commands.Context, value: discord.TextChannel = None):
+        """Configure where the logs will be sent to."""
+        if value is not None:
+            channel_id = value.id
+            await self.config.guild(ctx.guild).channel_log.set(channel_id)
 
-    @staticmethod
-    async def get_last_audit_action(guild) -> discord.AuditLogAction:
-        entry = await AuditManager.get_last_audit_entry(guild)
-        return entry.action
+        channel_id = await self.config.guild(ctx.guild).channel_log()
+        channel: discord.TextChannel = ctx.guild.get_channel(channel_id)
+        if channel is None:
+            await ctx.send("No channel was set.")
+            await ctx.send_help()
+        else:
+            await ctx.send("Bot will send logs to {channel}.".format(channel=channel.mention))
 
-    """Called when user gets banned from a Guild."""
-    async def on_member_ban(self, guild: discord.Guild, member):
-        if await self.config.guild(guild).log_member_ban():
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.ban, member)
-            print(entry.created_at)
-            print(entry.reason)
-            msg = "{member} has been banned from the guild.\nReason for ban: {reason}".format(member=member.mention, reason=entry.reason)
-            await self.print_log(msg, guild)
+    @logset.command(name="status")
+    async def set_status_change(self, ctx: commands.Context, value: str = None):
+        """Configure log status changes."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_status_change.set(v)
 
-    """Called when a User gets unbanned from a Guild."""
-    async def on_member_unban(self, guild: discord.Guild, member: discord.User):
-        if await self.config.guild(guild).log_member_unban():
-            msg = "{member} has been unbanned from the guild.".format(member=member.mention)
-            await self.print_log(msg, guild)
+        v = await self.config.guild(ctx.guild).log_status_change()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log member's status change.".format(will=will_log))
 
-    """Called when a Member joins a Guild."""
-    async def on_member_join(self, member: discord.Member):
-        if await self.config.guild(member.guild).log_member_join():
-            msg = "{member} has joined the guild.".format(member=member.mention)
-            await self.print_log(msg, member.guild)
+    @logset.command(name="activity")
+    async def set_activity_change(self, ctx: commands.Context, value: str = None):
+        """Configure log activity changes."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_activity_change.set(v)
 
-    """Called when a Member leaves a Guild."""
-    async def on_member_remove(self, member: discord.Member):
-        if await self.config.guild(member.guild).log_member_leave():
-            action = await AuditManager.get_last_audit_action(member.guild)
-            if action is discord.AuditLogAction.kick:
-                await self.on_member_kick(member)
-                return
-            if action is discord.AuditLogAction.ban:
-                return
-            msg = "{member} has left the guild.".format(member=member.mention)
-            await self.print_log(msg, member.guild)
+        v = await self.config.guild(ctx.guild).log_activity_change()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log member's activity change.".format(will=will_log))
 
-    """Called when a Member gets kicked from a Guild."""
-    async def on_member_kick(self, member: discord.Member):
-        if await self.config.guild(member.guild).log_member_leave():
-            entry = await AuditManager.get_audit_log(member.guild, discord.AuditLogAction.kick, member)
-            user = entry.user
-            msg = "{member} has been kicked by {user}.\nReason for kick: {reason}".format(member=member.mention, user=user.mention, reason=entry.reason)
-            await self.print_log(msg, member.guild)
+    @logset.command(name="avatar")
+    async def set_avatar_change(self, ctx: commands.Context, value: str = None):
+        """Configure log avatar changes."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_avatar_change.set(v)
 
-    """
-    Called when a message is deleted.
-    """
-    # TODO: Add deleted by, time of deleted message
-    async def on_message_delete(self, message: discord.Message):
-        if await self.config.guild(message.guild).log_delete_message():
-            msg = "A message of {member} has been deleted in channel {channel}.\nOriginal message:\n{message}".format(message=message.content, member=message.author.mention, channel=message.channel.mention)
-            await self.print_log(msg, message.guild)
+        v = await self.config.guild(ctx.guild).log_avatar_change()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log member's avatar change.".format(will=will_log))
 
-    """
-    Called when a Member updates their profile.
-    This is called when one or more of the following things change:
-        status V
-        game playing V
-        avatar V
-        nickname V
-        roles V
-    """
-    async def on_member_update(self, before: discord.Member, after: discord.Member):
-        guild: discord.Guild = before.guild if before.guild is not None else after.guild
+    @logset.command(name="nickname")
+    async def set_nickname_change(self, ctx: commands.Context, value: str = None):
+        """Configure log nickname changes"""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_nickname_change.set(v)
 
-        status_changed = False
-        activity_changed = False
-        activity_started = False
-        activity_finished = False
-        avatar_changed = False
-        nickname_created = False
-        nickname_changed = False
-        nickname_removed = False
-        roles_changed = False
+        v = await self.config.guild(ctx.guild).log_nickname_change()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log member's nickname change.".format(will=will_log))
 
-        before_activity: discord.Activity
-        after_activity: discord.Activity
-        after_status: discord.Status
+    @logset.command(name="role")
+    async def set_role_change(self, ctx: commands.Context, value: str = None):
+        """Configure log role changes."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_role_change.set(v)
 
-        if await self.config.guild(guild).log_status_change():
-            before_status: discord.Status = before.status
-            after_status: discord.Status = after.status
-            status_changed = before_status.name is not after_status.name
+        v = await self.config.guild(ctx.guild).log_role_change()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log member's role change.".format(will=will_log))
 
-        if await self.config.guild(guild).log_activity_change():
-            before_activity: discord.Activity = before.activity
-            after_activity: discord.Activity = after.activity
+    @logset.command(name="voice")
+    async def set_voice(self, ctx: commands.Context, value: str = None):
+        """Configure log voice connections."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_join_leave_voice.set(v)
 
-            activity_started = before_activity is None and after_activity is not None
-            activity_finished = before_activity is not None and after_activity is None
+        v = await self.config.guild(ctx.guild).log_join_leave_voice()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log member's voice connection.".format(will=will_log))
 
-            activity_changed = False
-            if before_activity is not None and after_activity is not None:
-                activity_changed = before_activity.name != after_activity.name
+    @logset.command(name="mute")
+    async def set_mute(self, ctx: commands.Context, value: str = None):
+        """Configure log muting members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_mute.set(v)
 
-        if await self.config.guild(guild).log_avatar_change():
-            avatar_changed = before.avatar_url != after.avatar_url
+        v = await self.config.guild(ctx.guild).log_mute()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log muting members.".format(will=will_log))
 
-        if await self.config.guild(guild).log_nickname_change():
-            nickname_changed = before.nick != after.nick
-            nickname_removed = nickname_changed and after.nick is None
-            nickname_created = nickname_changed and before.nick is None
+    @logset.command(name="deafen")
+    async def set_deafen(self, ctx: commands.Context, value: str = None):
+        """Configure log deafening members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_deafen.set(v)
 
-        if await self.config.guild(guild).log_role_change():
-            roles_changed = before.roles != after.roles
+        v = await self.config.guild(ctx.guild).log_deafen()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log deafening members.".format(will=will_log))
 
-        message = ""
+    @logset.command(name="selfmute")
+    async def set_self_mute(self, ctx: commands.Context, value: str = None):
+        """Configure log self-mute members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_self_mute.set(v)
 
-        if nickname_changed and not nickname_removed and not nickname_created:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
+        v = await self.config.guild(ctx.guild).log_self_mute()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log self-mute members.".format(will=will_log))
 
-            message = "{member} nickname has been changed from **{old}** to **{new}** by {user}.".format(member=after.mention, old=before.nick, new=after.nick, user=user.mention)
-        elif nickname_created:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
+    @logset.command(name="selfdeafen")
+    async def set_self_deafen(self, ctx: commands.Context, value: str = None):
+        """Configure log self-deafen members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_self_deafen.set(v)
 
-            message = "{member} nickname has been set to **{new}** by {user}.".format(member=after.mention, new=after.nick, user=user.mention)
-        elif nickname_removed:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
+        v = await self.config.guild(ctx.guild).log_self_deafen()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log self-deafen members.".format(will=will_log))
 
-            message = "{member} nickname has been removed by {user}.".format(member=after.mention, old=before.nick, user=user.mention)
-        elif status_changed:
-            message = "{member} went {status}.".format(member=after.mention, status=after_status.name)
-        elif activity_started:
-            after_activity_type: discord.ActivityType = after_activity.type
-            message = "{member} started {action} {activity}.".format(member=after.mention, action=after_activity_type.name, activity=after_activity.name)
-        elif activity_finished:
-            before_activity_type: discord.ActivityType = before_activity.type
-            message = "{member} stopped {action} {activity}.".format(member=after.mention, action=before_activity_type.name, activity=before_activity.name)
-        elif activity_changed:
-            before_activity_type: discord.ActivityType = before_activity.type
-            after_activity_type: discord.ActivityType = after_activity.type
-            message = "{member} stopped  {action} {activity} and started {action2} {activity2}.".format(member=after.mention, action=before_activity_type.name, activity=before_activity.name, action2=after_activity_type.name, activity2=after_activity.name)
-        elif avatar_changed:
-            message = "{member} has changed his avatar icon.".format(member=after.mention)
-        elif roles_changed:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
+    @logset.command(name="deletemsg")
+    async def set_delete_messge(self, ctx: commands.Context, value: str = None):
+        """Configure log deleted messages."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_delete_message.set(v)
 
-            message = "{member} roles has been changed by {user}:\n"
-            for br in before.roles:
-                if br not in after.roles:
-                    br: discord.Role
-                    message += "Demoted from {role}\n".format(role=br.name)
-            for ar in after.roles:
-                if ar not in before.roles:
-                    ar: discord.Role
-                    message += "Promoted to {role}\n".format(role=ar.name)
-            message = message.format(member=after.mention, user=user.mention)
-        await self.print_log(message, guild)
+        v = await self.config.guild(ctx.guild).log_delete_message()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log deleted messages.".format(will=will_log))
 
-    """
-    Called when a Member changes their VoiceState.
-    The following, but not limited to, examples illustrate when this event is called:
-        A member joins a voice room. V
-        A member leaves a voice room. V
-        A member is muted or deafened by their own accord. V
-        A member is muted or deafened by a guild administrator. V
-    """
-    async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
-        guild: discord.Guild = member.guild
+    @logset.command(name="memberjoin")
+    async def set_member_join(self, ctx: commands.Context, value: str = None):
+        """Configure log joining members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_member_join.set(v)
 
-        message = ""
+        v = await self.config.guild(ctx.guild).log_member_join()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log members joining the guild.".format(will=will_log))
 
-        join_voice = False
-        left_voice = False
-        moved_voice = False
-        self_muted = False
-        self_unmuted = False
-        self_deafen = False
-        self_undeafen = False
-        self_deafen_and_mute = False
-        self_undeafen_and_unmuted = False
-        muted = False
-        unmuted = False
-        deafen = False
-        undeafen = False
+    @logset.command(name="memberleave")
+    async def set_member_leave(self, ctx: commands.Context, value: str = None):
+        """Configure log leaving members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_member_leave.set(v)
 
-        if await self.config.guild(guild).log_join_leave_voice():
-            join_voice = before.channel is None and after.channel is not None
-            left_voice = before.channel is not None and after.channel is None
-            moved_voice = before.channel is not None and after.channel is not None and after.channel is not before.channel
+        v = await self.config.guild(ctx.guild).log_member_leave()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log members leaving the guild.".format(will=will_log))
 
-        if await self.config.guild(guild).log_self_mute():
-            self_muted = not before.self_mute and after.self_mute
-            self_unmuted = before.self_mute and not after.self_mute
+    @logset.command(name="ban")
+    async def set_ban(self, ctx: commands.Context, value: str = None):
+        """Configure log banning members."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_member_ban.set(v)
 
-        if await self.config.guild(guild).log_self_deafen():
-            self_deafen = not before.self_deaf and after.self_deaf
-            self_undeafen = before.self_deaf and not after.self_deaf
+        v = await self.config.guild(ctx.guild).log_member_ban()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log banning members.".format(will=will_log))
 
-        if await self.config.guild(guild).log_self_mute() and await self.config.guild(guild).log_self_deafen():
-            self_deafen_and_mute = self_muted and self_deafen
-            self_undeafen_and_unmuted = self_unmuted and self_undeafen
+    @logset.command(name="unban")
+    async def set_unban(self, ctx: commands.Context, value: str = None):
+        """Configure log unbanning users."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_member_unban.set(v)
 
-        if await self.config.guild(guild).log_mute():
-            muted = not before.mute and after.mute
-            unmuted = before.mute and not after.mute
+        v = await self.config.guild(ctx.guild).log_member_unban()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log unbanning members.".format(will=will_log))
 
-        if await self.config.guild(guild).log_deafen():
-            deafen = not before.deaf and after.deaf
-            undeafen = before.deaf and not after.deaf
+    @logset.command(name="modlogcog")
+    async def set_modlog(self, ctx: commands.Context, value: str = None):
+        """Configure disabling modlog cog."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).disable_modlog.set(v)
 
-        if muted or unmuted or deafen or undeafen:
-            message = "{member} has been **{action}** by {user}."
-            action = "muted" if muted else "unmuted" if unmuted else "deafen" if deafen else "undeafen"
-            user: discord.Member = await AuditManager.get_last_log_user(guild)
-            message = message.format(member=member.mention, action=action, user=user.mention)
+        v = await self.config.guild(ctx.guild).disable_modlog()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}disable modlog cog.".format(will=will_log))
+        if v:
+            await self.main.disable_modlog_cog(ctx.guild)
 
-        elif self_muted or self_deafen or self_unmuted or self_undeafen or self_deafen_and_mute or self_undeafen_and_unmuted:
-            message = "{member} has **self {action}** themselves."
-            action = "muted and deafen" if self_deafen_and_mute else "unmuted and undeafen" if self_undeafen_and_unmuted else "muted" if self_muted else "unmuted" if self_unmuted else "deafen" if self_deafen else "undeafen"
-            user: discord.Member = await AuditManager.get_last_log_user(guild)
-            message = message.format(member=member.mention, action=action, user=user.mention)
+    @logset.command(name="guildsettings")
+    async def set_guild_settings(self, ctx: commands.Context, value: str = None):
+        """Configure changes in the guild settings."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_guild_settings.set(v)
 
-        elif join_voice or left_voice or moved_voice:
-            message = "{member} has {action} the voice channel: {channel}."
-            action = "connected" if join_voice else "disconnected" if left_voice else "moved to"
-            channel_name = before.channel.name if left_voice else after.channel.name
-            message = message.format(member=member.mention, action=action, channel=channel_name)
-
-        await self.print_log(message, guild)
+        v = await self.config.guild(ctx.guild).log_guild_settings()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log changes in the guild settings.".format(will=will_log))
