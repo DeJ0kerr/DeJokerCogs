@@ -11,19 +11,97 @@ class EventManager:
         self.config: Config = config
         self.main = main
 
-    async def on_private_channel_delete(self, channel: discord.abc.PrivateChannel):
-        entry: discord.AuditLogEntry = await AuditManager.get_audit_log(channel., discord.AuditLogAction.guild_update)
+    """
+    Called whenever a guild channel is deleted.
+    """
+    async def on_guild_channel_delete(self, channel: discord.abc.GuildChannel):
+        if not await self.config.guild(channel.guild).log_channel_creation():
+            return
+
+        entry: discord.AuditLogEntry = await AuditManager.get_audit_log(channel.guild, discord.AuditLogAction.guild_update)
         user: discord.Member = entry.user
-        if isinstance(channel, discord.GroupChannel):
+        if isinstance(channel, discord.TextChannel):
+            msg = "{user} has deleted a text channel \"{name}\".".format(name=channel.name, user=user.mention)
+            await self.main.print_log(msg, channel.guild)
+        elif isinstance(channel, discord.VoiceChannel):
+            msg = "{user} has deleted a voice channel \"{name}\".".format(name=channel.name, user=user.mention)
+            await self.main.print_log(msg, channel.guild)
 
-            msg = "{user} has created a private voice channel \"{name}\"".format(
-                name=channel.name, user=user.guild)
-            await self.main.print_log(msg, user.guild)
-        elif isinstance(channel, discord.DMChannel):
+    """Called whenever a guild channel is created."""
+    async def on_guild_channel_create(self, channel: discord.abc.GuildChannel):
+        if not await self.config.guild(channel.guild).log_channel_creation():
+            return
 
-            msg = "{user} has created a private text channel \"{name}\"".format(
-                name=channel.name, user=user.guild)
-            await self.main.print_log(msg, user.guild)
+        entry: discord.AuditLogEntry = await AuditManager.get_audit_log(channel.guild, discord.AuditLogAction.guild_update)
+        user: discord.Member = entry.user
+        if isinstance(channel, discord.TextChannel):
+            msg = "{user} has created a text channel \"{name}\".".format(name=channel.name, user=user.mention)
+            await self.main.print_log(msg, channel.guild)
+        elif isinstance(channel, discord.VoiceChannel):
+            msg = "{user} has created a voice channel \"{name}\".".format(name=channel.name, user=user.mention)
+            await self.main.print_log(msg, channel.guild)
+
+    """Called whenever a guild channel is updated."""
+    async def on_guild_channel_update(self, before: discord.abc.GuildChannel, after: discord.abc.GuildChannel):
+        guild: discord.Guild = after.guild
+        if not await self.config.guild(guild).log_channel_edit():
+            return
+
+        entry: discord.AuditLogEntry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.guild_update)
+        user: discord.Member = entry.user
+        if isinstance(after, discord.TextChannel) and isinstance(before, discord.TextChannel):
+            msg = ""
+
+            if after.name != before.name:
+                msg += "\n**Name**: {before} -> {after}".format(before=before.name, after=after.name)
+            if after.topic != before.topic:
+                after_topic = after.topic if after.topic != "" else "None"
+                before_topic = before.topic if before.topic != "" else "None"
+                msg += "\n**Topic**:\n{before}\n->\n{after}".format(before=before_topic, after=after_topic)
+
+            if after.nsfw != before.nsfw:
+                msg += "\n**NSFW**: {before} -> {after}".format(before=before.nsfw, after=after.nsfw)
+
+            if after.slowmode_delay != before.slowmode_delay:
+                before_slow = before.slowmode_delay if before.slowmode_delay != 0 else "Disabled"
+                after_slow = after.slowmode_delay if after.slowmode_delay != 0 else "Disabled"
+                msg += "\n**Slow Mode**: {before} -> {after}".format(before=before_slow, after=after_slow)
+
+            if msg == "":
+                return
+            msg = "{user} has edited the text channel \"{name}\":".format(name=before.name, user=user.mention) + msg
+            await self.main.print_log(msg, after.guild)
+        elif isinstance(after, discord.VoiceChannel) and isinstance(before, discord.VoiceChannel):
+            msg = ""
+            if after.name != before.name:
+                msg += "\n**Name**: {before} -> {after}".format(before=before.name, after=after.name)
+
+            if after.bitrate != before.bitrate:
+                msg += "\n**Bitrate**: {before}kbps -> {after}kbps".format(before=int(before.bitrate/1000), after=int(after.bitrate/1000))
+
+            if after.user_limit != before.user_limit:
+                after_limit = "Unlimited" if after.user_limit == 0 else after.user_limit
+                before_limit = "Unlimited" if before.user_limit == 0 else before.user_limit
+                msg += "\n**User Limit**: {before} slots -> {after} slots.".format(before=before_limit, after=after_limit)
+
+            if msg == "":
+                return
+            msg = "{user} has edited the voice channel \"{name}\":".format(name=before.name, user=user.mention) + msg
+            await self.main.print_log(msg, after.guild)
+
+    async def on_guild_emojis_update(self, guild: discord.Guild, before: list, after: list):
+        if not self.config.guild(guild).log_emojis():
+            return
+        msg = ""
+        for old in before:
+            old: discord.Emoji
+            if old not in after:
+                msg += "Emoji {emoji} has been deleted.\n".format(emoji=old.name)
+        for new in after:
+            new: discord.Emoji
+            if new not in before:
+                msg += "Emoji {emoji} {display} has been added.".format(emoji=new.name, display=new)
+        await self.main.print_log(msg, guild=guild)
 
     """Called when a Guild updates, for example:
         Changing the guild vanity URL
@@ -74,7 +152,7 @@ class EventManager:
                 await self.main.print_log(msg, after)
         elif before.afk_timeout != after.afk_timeout:
             msg = "{user} has set the AFK timeout to be {time} minutes.".format(
-                time=int(after.afk_timeout/60), user=user.mention)
+                time=int(after.afk_timeout / 60), user=user.mention)
             await self.main.print_log(msg, after)
         elif before.region is not after.region:
             msg = "{user} has changed the voice region from {old} to {new}.".format(
@@ -186,11 +264,28 @@ class EventManager:
                 member=member.mention, user=user.mention, reason=entry.reason)
             await self.main.print_log(msg, member.guild)
 
-    """
-    Called when a message is deleted.
-    """
+    """Called when a Message receives an update event."""
+    # TODO: add link to message
+    async def on_message_edit(self, before: discord.Message, after: discord.Message):
+        if after.guild is None:
+            return
+        if await self.config.guild(before.guild).log_edit_message():
+            msg = ""
+            if before.content != after.content:
+                msg = "A message of {member} has been edited in channel {channel}.\n**__Edited message__**:\n{message}\n\n**__Original message__**:\n{old_message}".format(
+                    message=after.content, old_message=before.content, member=after.author.mention, channel=after.channel.mention)
+            elif before.pinned != after.pinned:
+                un = "un" if not after.pinned else ""
+                msg = "A message of {member} has been {un}pinned in channel {channel}.".format(un=un, member=after.author.mention, channel=after.channel.mention)
+            if msg == "":
+                return
+            await self.main.print_log(msg, after.guild)
+
+    """Called when a message is deleted."""
     # TODO: Add deleted by, time of deleted message
     async def on_message_delete(self, message: discord.Message):
+        if message.guild is None:
+            return
         if await self.config.guild(message.guild).log_delete_message():
             msg = "A message of {member} has been deleted in channel {channel}.\nOriginal message:\n{message}".format(
                 message=message.content, member=message.author.mention, channel=message.channel.mention)
@@ -312,6 +407,7 @@ class EventManager:
         A member is muted or deafened by their own accord. V
         A member is muted or deafened by a guild administrator. V
     """
+
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         guild: discord.Guild = member.guild
 

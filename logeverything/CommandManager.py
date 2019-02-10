@@ -82,9 +82,9 @@ class CommandManager:
         will_log = "" if v else "not "
         await ctx.send("Bot will {will}log member's nickname change.".format(will=will_log))
 
-    @logset.command(name="role")
+    @logset.command(name="rolemember")
     async def set_role_change(self, ctx: commands.Context, value: str = None):
-        """Configure log role changes."""
+        """Configure log member's role changes."""
         if value is not None:
             v = value.lower() == "true"
             await self.config.guild(ctx.guild).log_role_change.set(v)
@@ -216,9 +216,31 @@ class CommandManager:
         if v:
             await self.main.disable_modlog_cog(ctx.guild)
 
+    @logset.command(name="channel")
+    async def set_guild_settings(self, ctx: commands.Context, value: str = None):
+        """Configure log creation and deletion of channels."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_channel_creation.set(v)
+
+        v = await self.config.guild(ctx.guild).log_channel_creation()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log creation and deletion of channels.".format(will=will_log))
+
+    @logset.command(name="editchannel")
+    async def set_guild_settings(self, ctx: commands.Context, value: str = None):
+        """Configure log channel editing."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_channel_edit.set(v)
+
+        v = await self.config.guild(ctx.guild).log_channel_edit()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log channel editing.".format(will=will_log))
+
     @logset.command(name="guildsettings")
     async def set_guild_settings(self, ctx: commands.Context, value: str = None):
-        """Configure changes in the guild settings."""
+        """Configure log changes in the guild settings."""
         if value is not None:
             v = value.lower() == "true"
             await self.config.guild(ctx.guild).log_guild_settings.set(v)
@@ -226,3 +248,25 @@ class CommandManager:
         v = await self.config.guild(ctx.guild).log_guild_settings()
         will_log = "" if v else "not "
         await ctx.send("Bot will {will}log changes in the guild settings.".format(will=will_log))
+
+    @logset.command(name="editmessage")
+    async def set_edit_message(self, ctx: commands.Context, value: str = None):
+        """Configure log message editing."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_edit_message.set(v)
+
+        v = await self.config.guild(ctx.guild).log_edit_message()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log message editing.".format(will=will_log))
+
+    @logset.command(name="emoji")
+    async def set_edit_message(self, ctx: commands.Context, value: str = None):
+        """Configure log emoji updates."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).log_emojis.set(v)
+
+        v = await self.config.guild(ctx.guild).log_emojis()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log emoji updates.".format(will=will_log))

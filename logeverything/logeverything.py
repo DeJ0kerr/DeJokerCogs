@@ -30,8 +30,12 @@ class LogEverything(CommandManager, EventManager, commands.Cog):
             log_member_leave=True,
             log_member_ban=True,
             log_member_unban=True,
-            disable_modlog=True,
+            log_edit_message=True,
             log_guild_settings=True,
+            log_channel_creation=True,
+            log_channel_edit=True,
+            log_emojis=True,
+            disable_modlog=True,
             channel_log=None
         )
         super().__init__(self.bot, self.config, self)
