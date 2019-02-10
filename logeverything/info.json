@@ -1,7 +1,7 @@
 {
     "AUTHOR" : "De Joker",
     "INSTALL_MSG" : "Thank you for installing Log Everything! To start \"[p]logset logchannel\"",
-    "NAME" : "logeverything",
+    "NAME" : "Log Everything",
     "SHORT" : "Log Everything pretty much logs every single action being made in your guild.",
     "DESCRIPTION" : "Log Everything logs every single thing.",
     "TAGS" : ["utility", "logs", "tools", "moderation", "logging"],

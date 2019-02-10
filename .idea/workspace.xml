@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7b5f707d-868d-488f-84a1-6f568b0a655b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Raffle/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Raffle/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Raffle/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Raffle/.idea/raffle.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Raffle/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Raffle/raffle.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logeverything/CommandManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/CommandManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logeverything/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/info.json" afterDir="false" />
-    </list>
+    <list default="true" id="7b5f707d-868d-488f-84a1-6f568b0a655b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +123,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logeverything/CommandManager.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="584">
@@ -146,11 +135,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/logeverything/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            <state>
+              <caret column="18" selection-start-column="5" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -740,13 +729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logeverything/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/EventManager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="533">
@@ -776,6 +758,13 @@
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logeverything/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="18" selection-start-column="5" selection-end-column="18" />
         </state>
       </provider>
     </entry>
