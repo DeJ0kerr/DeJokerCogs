@@ -33,7 +33,7 @@ class CommandManager:
         channel_id = await self.config.guild(ctx.guild).channel_log()
         channel: discord.TextChannel = ctx.guild.get_channel(channel_id)
         if channel is None:
-            await ctx.send("No channel was set.")
+            await ctx.send("No channel was set. To set type {prefix}logset logchannel #channel".format(prefix=ctx.clean_prefix))
             await ctx.send_help()
         else:
             await ctx.send("Bot will send logs to {channel}.".format(channel=channel.mention))

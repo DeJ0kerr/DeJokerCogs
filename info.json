@@ -1,7 +1,7 @@
 {
-  "AUTHOR": "DeJoker",
-  "INSTALL_MSG": "TODO: Add install message xD",
-  "NAME": "DeJokerCogs",
-  "SHORT": "Essential cogs for every server.",
-  "DESCRIPTION": "TODO: Add description"
+    "AUTHOR" : "De Joker",
+    "INSTALL_MSG" : "Thank you for installing my repository!\nPlease send me request/idea for new cogs and features that you want to have!\nAny bugreports can be submitted in my repository page and are fully welcome!",
+    "NAME" : "DeJokerCogs",
+    "SHORT" : "Essential tools for moderating your guild.",
+    "DESCRIPTION" : "DeJokerCogs gives you reliable tools to work with and make sure nothing is being made without your watch. All of the cogs are fully customizable only for you."
 }
