@@ -1,5 +1,5 @@
 import discord
-from logeverything.AuditManager import AuditManager
+from .AuditManager import AuditManager
 from redbot.core import Config
 from redbot.core.bot import Red
 

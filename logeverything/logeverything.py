@@ -1,9 +1,9 @@
 import discord
 import time
 import asyncio
-from logeverything.AuditManager import AuditManager
-from logeverything.CommandManager import CommandManager
-from logeverything.EventManager import EventManager
+from .AuditManager import AuditManager
+from .CommandManager import CommandManager
+from .EventManager import EventManager
 from redbot.core import modlog
 from redbot.core import commands
 from redbot.core import Config

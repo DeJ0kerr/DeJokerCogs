@@ -1,4 +1,4 @@
-from logeverything.logeverything import LogEverything
+from .logeverything import LogEverything
 
 
 async def setup(bot):
