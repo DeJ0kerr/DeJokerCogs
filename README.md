@@ -9,3 +9,6 @@ Install Guide:
 **Hint**: `[p] is your bot prefix`
 
 To see all of the cogs in this repo simply type the command `[p]cog list DeJokerCogs`
+
+# Bugs | Requests
+Contact me on discord! De Joker#7786
