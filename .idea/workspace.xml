@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/logeverything/EventManager.py" line="561" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7b5f707d-868d-488f-84a1-6f568b0a655b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logeverything/CommandManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/CommandManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logeverything/EventManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/EventManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logeverything/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logeverything/logeverything.py" beforeDir="false" afterPath="$PROJECT_DIR$/logeverything/logeverything.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,30 +62,32 @@
     <session id="784884479">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.21" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.21" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1450" />
+          <entry key="py" value="12317" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1450" />
+          <entry key="Python" value="12317" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="2" />
+          <entry key="json" value="2" />
+          <entry key="py" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="2" />
+          <entry key="JSON" value="2" />
+          <entry key="Python" value="28" />
         </counts>
       </usages-collector>
     </session>
@@ -92,45 +97,37 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logeverything/EventManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-              <folding>
-                <marker date="1549808097435" expanded="true" signature="4959:5382" ph="..." />
-                <marker date="1549808097435" expanded="true" signature="15465:15469" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logeverything/AuditManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
+            <state relative-caret-position="476">
+              <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1549564326998" expanded="true" signature="51:53" ph="..." />
+                <marker date="1550001905074" expanded="true" signature="2073:2290" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/logeverything/CommandManager.py">
+        <entry file="file://$PROJECT_DIR$/logeverything/EventManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="190">
+              <caret line="454" column="55" selection-start-line="454" selection-start-column="55" selection-end-line="454" selection-end-column="55" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <marker date="1550074269980" expanded="true" signature="23400:23404" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logeverything/CommandManager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4658">
+              <caret line="278" column="22" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1549883733431" expanded="true" signature="313:318" ph="..." />
               </folding>
             </state>
           </provider>
@@ -165,7 +162,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>avatar_url</find>
       <find>mention</find>
       <find>avatar</find>
       <find>self.config.</find>
@@ -192,12 +188,18 @@
       <find>on_guild_c</find>
       <find>fo</find>
       <find>logcha</find>
+      <find>-&gt;</find>
+      <find>:arrow_right:</find>
+      <find>msg =</find>
+      <find>➔</find>
     </findStrings>
     <replaceStrings>
       <replace>display_name</replace>
       <replace>self.config.guild().</replace>
       <replace>await self.config.guild(guild)</replace>
       <replace>Configure</replace>
+      <replace>➔</replace>
+      <replace>🠆</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -210,16 +212,16 @@
         <option value="$PROJECT_DIR$/LogEverything/LogEverything.py" />
         <option value="$PROJECT_DIR$/raffle/raffle.py" />
         <option value="$PROJECT_DIR$/logeverything/CommandsManager.py" />
-        <option value="$PROJECT_DIR$/logeverything/AuditManager.py" />
-        <option value="$PROJECT_DIR$/logeverything/CommandManager.py" />
         <option value="$PROJECT_DIR$/logeverything/__init__.py" />
-        <option value="$PROJECT_DIR$/logeverything/EventManager.py" />
+        <option value="$PROJECT_DIR$/logeverything/CommandManager.py" />
         <option value="$PROJECT_DIR$/logeverything/logeverything.py" />
+        <option value="$PROJECT_DIR$/logeverything/AuditManager.py" />
+        <option value="$PROJECT_DIR$/logeverything/EventManager.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-448" />
+    <option name="x" value="62" />
     <option name="y" value="-8" />
     <option name="width" value="1918" />
     <option name="height" value="1038" />
@@ -232,7 +234,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -249,11 +250,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -489,7 +492,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.17913593" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.18071654" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.329718" />
@@ -506,6 +509,25 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.17913593" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Python Console" order="2" />
+      <window_info anchor="bottom" id="Message" order="3" />
+      <window_info anchor="bottom" id="Find" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="5" weight="0.329718" />
+      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -524,9 +546,6 @@
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/LogEverything/main/LogEverything.py" />
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/discord/enums.py" />
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/discord/audit_logs.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/enum.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2237">
@@ -605,13 +624,7 @@
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/redbot/core/commands/commands.py" />
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/redbot/core/commands/context.py" />
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/redbot/core/config.py" />
-    <entry file="file://$PROJECT_DIR$/raffle/raffle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="117" column="36" selection-start-line="117" selection-start-column="36" selection-end-line="117" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/raffle/raffle.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/discord/embeds.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -691,24 +704,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../RedVirtualMachine/Lib/site-packages/discord/guild.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="1325" column="17" selection-start-line="1325" selection-start-column="17" selection-end-line="1325" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/771389371/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
           <caret line="258" column="4" selection-start-line="258" selection-start-column="4" selection-end-line="258" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/info.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="180" selection-start-line="5" selection-start-column="180" selection-end-line="5" selection-end-column="180" />
         </state>
       </provider>
     </entry>
@@ -719,6 +718,84 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../RedVirtualMachine/Lib/site-packages/redbot/core/commands/requires.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="607" column="4" selection-start-line="607" selection-start-column="4" selection-end-line="607" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../RedVirtualMachine/Lib/site-packages/discord/guild.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="775">
+          <caret line="390" column="8" selection-start-line="390" selection-start-column="8" selection-end-line="390" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../RedVirtualMachine/Lib/site-packages/discord/abc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="173" column="6" selection-start-line="173" selection-start-column="6" selection-end-line="173" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/771389371/time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="172" column="4" selection-start-line="172" selection-start-column="4" selection-end-line="172" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../RedVirtualMachine/Lib/site-packages/discord/embeds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="97" column="21" lean-forward="true" selection-start-line="97" selection-start-column="21" selection-end-line="97" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../RedVirtualMachine/Lib/site-packages/discord/member.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="328" column="21" lean-forward="true" selection-start-line="328" selection-start-column="21" selection-end-line="328" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/imaplib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="1234" column="12" selection-start-line="1234" selection-start-column="12" selection-end-line="1234" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logeverything/AuditManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1550001905074" expanded="true" signature="2073:2290" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logeverything/CommandManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4658">
+          <caret line="278" column="22" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1549883733431" expanded="true" signature="313:318" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -726,41 +803,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logeverything/logeverything.py">
+    <entry file="file://$PROJECT_DIR$/info.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
+        <state relative-caret-position="85">
+          <caret line="5" column="180" selection-start-line="5" selection-start-column="180" selection-end-line="5" selection-end-column="180" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/logeverything/EventManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-          <folding>
-            <marker date="1549808097435" expanded="true" signature="4959:5382" ph="..." />
-            <marker date="1549808097435" expanded="true" signature="15465:15469" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logeverything/AuditManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
+        <state relative-caret-position="190">
+          <caret line="454" column="55" selection-start-line="454" selection-start-column="55" selection-end-line="454" selection-end-column="55" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1549564326998" expanded="true" signature="51:53" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logeverything/CommandManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1550074269980" expanded="true" signature="23400:23404" ph="..." />
           </folding>
         </state>
       </provider>

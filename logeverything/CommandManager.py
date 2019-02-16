@@ -38,6 +38,17 @@ class CommandManager:
         else:
             await ctx.send("Bot will send logs to {channel}.".format(channel=channel.mention))
 
+    @logset.command(name="embedlog")
+    async def set_use_embed(self, ctx: commands.Context, value: str = None):
+        """Configure if the logs will be sent as embed messages."""
+        if value is not None:
+            v = value.lower() == "true"
+            await self.config.guild(ctx.guild).use_embed.set(v)
+
+        v = await self.config.guild(ctx.guild).use_embed()
+        will_log = "" if v else "not "
+        await ctx.send("Bot will {will}log logs as embed.".format(will=will_log))
+
     @logset.command(name="status")
     async def set_status_change(self, ctx: commands.Context, value: str = None):
         """Configure log status changes."""

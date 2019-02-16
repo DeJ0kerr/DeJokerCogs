@@ -1,6 +1,7 @@
 import discord
 import time
 import asyncio
+
 from .AuditManager import AuditManager
 from .CommandManager import CommandManager
 from .EventManager import EventManager
@@ -36,6 +37,7 @@ class LogEverything(CommandManager, EventManager, commands.Cog):
             log_channel_edit=True,
             log_emojis=True,
             disable_modlog=True,
+            use_embed=True,
             channel_log=None
         )
         super().__init__(self.bot, self.config, self)
@@ -55,6 +57,14 @@ class LogEverything(CommandManager, EventManager, commands.Cog):
     @staticmethod
     async def disable_modlog_cog(guild):
         await modlog.set_modlog_channel(guild, None)
+
+    async def get_channel(self, guild: discord.Guild):
+        if not await self.is_channel_set(guild):
+            return None
+
+        channel_id = await self.config.guild(guild).channel_log()
+        channel = guild.get_channel(channel_id)
+        return channel
 
     async def is_channel_set(self, guild: discord.Guild):
         channel_id = await self.config.guild(guild).channel_log()
@@ -76,6 +86,19 @@ class LogEverything(CommandManager, EventManager, commands.Cog):
         message = message.replace("\n", "\n\t\t\t\t\t")
         message = "[{time}] ".format(time=time.strftime("%H:%M:%S")) + message
         await channel.send(message)
+
+    async def print_log_embed(self, embed_message: discord.Embed, guild: discord.Guild):
+        if not await self.is_channel_set(guild):
+            prefix = await self.bot.db.prefix()
+            print("Use \"{prefix}logset logchannel #yourchannel\" In order to start using LogEverything Cog.".format(
+                prefix=prefix[0]))
+            return
+
+        channel_id = await self.config.guild(guild).channel_log()
+        channel = guild.get_channel(channel_id)
+        embed_message.set_footer(text=time.strftime("%d/%m/%Y - %H:%M:%S"))
+        embed_message.set_author(name="Log Everything", icon_url="https://www.shareicon.net/data/512x512/2016/09/21/830532_log_512x512.png")
+        await channel.send(embed=embed_message)
 
     # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
     @staticmethod
