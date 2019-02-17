@@ -1,8 +1,6 @@
 import discord
 import time
-import asyncio
 
-from .AuditManager import AuditManager
 from .CommandManager import CommandManager
 from .EventManager import EventManager
 from redbot.core import modlog
@@ -99,28 +97,3 @@ class LogEverything(CommandManager, EventManager, commands.Cog):
         embed_message.set_footer(text=time.strftime("%d/%m/%Y - %H:%M:%S"))
         embed_message.set_author(name="Log Everything", icon_url="https://www.shareicon.net/data/512x512/2016/09/21/830532_log_512x512.png")
         await channel.send(embed=embed_message)
-
-    # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
-    @staticmethod
-    async def get_audit_log(guild, action: discord.AuditLogAction, target) -> discord.AuditLogEntry:
-        await asyncio.sleep(0.5)
-        async for entry in guild.audit_logs(action=action):
-            if entry.target.id == target.id:
-                return entry
-
-    # TODO: Remove asyncio.sleep() When there is a new way to get audit logs.
-    @staticmethod
-    async def get_last_audit_entry(guild) -> discord.AuditLogEntry:
-        await asyncio.sleep(0.5)
-        async for entry in guild.audit_logs(limit=1):
-            return entry
-
-    @staticmethod
-    async def get_last_log_user(guild) -> discord.Member:
-        entry = await AuditManager.get_last_audit_entry(guild)
-        return entry.user
-
-    @staticmethod
-    async def get_last_audit_action(guild) -> discord.AuditLogAction:
-        entry = await AuditManager.get_last_audit_entry(guild)
-        return entry.action
