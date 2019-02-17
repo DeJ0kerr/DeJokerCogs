@@ -1,7 +1,7 @@
 # DeJokerCogs
-Essentials tools for your server as a Owner/Mod.
+Essentials tools for your guild as a Owner/Mod.
 
-Install Guide:
+Installation Guide:
 1. Type the command `[p]repo add DeJokerCogs https://github.com/erez9901/DeJokerCogs`
 2. Type the command `[p]cog install DeJokerCogs [cog-name]` _For example_: `?cog install DeJokerCogs LogEverything`
 3. Done!
@@ -10,5 +10,5 @@ Install Guide:
 
 To see all of the cogs in this repo simply type the command `[p]cog list DeJokerCogs`
 
-# Bugs | Requests
+# Bugs | Issues | Requests 
 Contact me on discord! De Joker#7786
