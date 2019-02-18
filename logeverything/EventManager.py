@@ -23,24 +23,28 @@ class EventManager:
         msg = ""
 
         entry: discord.AuditLogEntry = await AuditManager.get_audit_log(channel.guild, discord.AuditLogAction.guild_update)
-        user: discord.Member = entry.user
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
+
         if isinstance(channel, discord.TextChannel):
-            msg = "{user} has deleted a text channel \"{name}\".".format(name=channel.name, user=user.mention)
+            msg = "{user} has deleted a text channel \"{name}\".".format(name=channel.name, user=user)
 
             embed_message.add_field(name="Deleted Text Channel", value=channel.name)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
         elif isinstance(channel, discord.VoiceChannel):
-            msg = "{user} has deleted a voice channel \"{name}\".".format(name=channel.name, user=user.mention)
+            msg = "{user} has deleted a voice channel \"{name}\".".format(name=channel.name, user=user)
 
             embed_message.add_field(name="Deleted Voice Channel", value=channel.name)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
         elif isinstance(channel, discord.CategoryChannel):
-            msg = "{user} has deleted a category channel \"{name}\".".format(name=channel.name, user=user.mention)
+            msg = "{user} has deleted a category channel \"{name}\".".format(name=channel.name, user=user)
 
             embed_message.add_field(name="Deleted Category Channel", value=channel.name)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
         if await self.config.guild(channel.guild).use_embed():
             await self.main.print_log_embed(embed_message, channel.guild)
@@ -57,24 +61,28 @@ class EventManager:
         msg = ""
 
         entry: discord.AuditLogEntry = await AuditManager.get_audit_log(channel.guild, discord.AuditLogAction.guild_update)
-        user: discord.Member = entry.user
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
+
         if isinstance(channel, discord.TextChannel):
-            msg = "{user} has created a text channel \"{name}\".".format(name=channel.name, user=user.mention)
+            msg = "{user} has created a text channel \"{name}\".".format(name=channel.name, user=user)
 
             embed_message.add_field(name="Created Text Channel", value=channel.mention)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
         elif isinstance(channel, discord.VoiceChannel):
-            msg = "{user} has created a voice channel \"{name}\".".format(name=channel.name, user=user.mention)
+            msg = "{user} has created a voice channel \"{name}\".".format(name=channel.name, user=user)
 
             embed_message.add_field(name="Created Voice Channel", value=channel.name)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
         elif isinstance(channel, discord.CategoryChannel):
-            msg = "{user} has created a category channel \"{name}\".".format(name=channel.name, user=user.mention)
+            msg = "{user} has created a category channel \"{name}\".".format(name=channel.name, user=user)
 
             embed_message.add_field(name="Created Category Channel", value=channel.name)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
         if await self.config.guild(channel.guild).use_embed():
             await self.main.print_log_embed(embed_message, channel.guild)
@@ -92,10 +100,14 @@ class EventManager:
         embed_message = discord.Embed(title="Channel Update Log")
 
         entry: discord.AuditLogEntry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.guild_update)
-        user: discord.Member = entry.user
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
+
         if isinstance(after, discord.TextChannel) and isinstance(before, discord.TextChannel):
             embed_message.add_field(name="Text Channel", value=before.mention)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
             if after.name != before.name:
                 msg += "\n**Name**: {before} 🠆 {after}".format(before=before.name, after=after.name)
@@ -122,10 +134,10 @@ class EventManager:
                 embed_message.add_field(name="Slow Mode", value="{before} 🠆 {after}".format(before=before_slow, after=after_slow))
             if msg == "":
                 return
-            msg = "{user} has edited the text channel \"{name}\":".format(name=before.name, user=user.mention) + msg
+            msg = "{user} has edited the text channel \"{name}\":".format(name=before.name, user=user) + msg
         elif isinstance(after, discord.VoiceChannel) and isinstance(before, discord.VoiceChannel):
             embed_message.add_field(name="Voice Channel", value=before.name)
-            embed_message.add_field(name="Moderator", value=user.mention)
+            embed_message.add_field(name="Moderator", value=user)
 
             if after.name != before.name:
                 msg += "\n**Name**: {before} 🠆 {after}".format(before=before.name, after=after.name)
@@ -143,8 +155,8 @@ class EventManager:
                 embed_message.add_field(name="User Limit", value="{before} slots 🠆 {after} slots".format(before=before_limit, after=after_limit))
             if msg == "":
                 return
-            msg = "{user} has edited the voice channel \"{name}\":".format(name=before.name, user=user.mention) + msg
-            embed_message.add_field(name="Moderator", value=user.mention)
+            msg = "{user} has edited the voice channel \"{name}\":".format(name=before.name, user=user) + msg
+            embed_message.add_field(name="Moderator", value=user)
 
         if await self.config.guild(after.guild).use_embed():
             await self.main.print_log_embed(embed_message, after.guild)
@@ -209,14 +221,17 @@ class EventManager:
             return
 
         entry: discord.AuditLogEntry = await AuditManager.get_audit_log(after, discord.AuditLogAction.guild_update)
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
 
         before_diff = entry.before
         after_diff = entry.after
 
-        user: discord.Member = entry.user
         msg = ""
         embed_message = discord.Embed(title="Guild Update Log")
-        embed_message.add_field(name="Moderator", value=user.mention)
+        embed_message.add_field(name="Moderator", value=user)
 
         if before.name != after.name:
             msg += "Guild's Name: {old} 🠆 {new}.\n".format(old=before.name, new=after.name)
@@ -268,6 +283,7 @@ class EventManager:
         if before.owner_id != after.owner_id:
             msg += "Guild's Ownership: {user} 🠆 {new}.\n".format(new=after.owner.mention, user=before.owner.mention)
             embed_message.add_field(name="Guild's Ownership", value="{user} 🠆 {new}".format(new=after.owner.mention, user=before.owner.mention))
+
         """
             Using try-catch because of AuditLogDiff functionality 
         """
@@ -292,7 +308,7 @@ class EventManager:
             pass
 
         if msg != "":
-            msg = "{user} has updated the guild's settings:\n".format(user=user.mention) + msg
+            msg = "{user} has updated the guild's settings:\n".format(user=user) + msg
             if await self.config.guild(after).use_embed():
                 await self.main.print_log_embed(embed_message, after)
             else:
@@ -303,13 +319,16 @@ class EventManager:
     async def on_member_ban(self, guild: discord.Guild, member):
         if await self.config.guild(guild).log_member_ban():
             entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.ban, member)
-            print(entry.created_at)
-            print(entry.reason)
-            msg = "{member} has been banned from the guild by {user},\nReason for ban: {reason}".format(member=member.mention, reason=entry.reason, user=entry.user.mention)
+            try:
+                user = entry.user.mention
+            except AttributeError:
+                user = "N/A"
+
+            msg = "{member} has been banned from the guild by {user},\nReason for ban: {reason}".format(member=member.mention, reason=entry.reason, user=user)
             embed_message = discord.Embed(title="Ban Member Log")
             embed_message.add_field(name="Banned Member", value=member.mention)
             embed_message.add_field(name="Reason", value=entry.reason)
-            embed_message.add_field(name="Moderator", value=entry.user.mention)
+            embed_message.add_field(name="Moderator", value=user)
             if await self.config.guild(guild).use_embed():
                 await self.main.print_log_embed(embed_message, guild)
             else:
@@ -320,10 +339,15 @@ class EventManager:
     async def on_member_unban(self, guild: discord.Guild, member: discord.User):
         if await self.config.guild(guild).log_member_unban():
             entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.unban, member)
-            msg = "{member} has been unbanned from the guild by {user}.".format(member=member.mention, user=entry.user.mention)
+            try:
+                user = entry.user.mention
+            except AttributeError:
+                user = "N/A"
+
+            msg = "{member} has been unbanned from the guild by {user}.".format(member=member.mention, user=user)
             embed_message = discord.Embed(title="Unban Member Log")
             embed_message.add_field(name="Unbanned Member", value=member.mention)
-            embed_message.add_field(name="Moderator", value=entry.user.mention)
+            embed_message.add_field(name="Moderator", value=user)
             if await self.config.guild(guild).use_embed():
                 await self.main.print_log_embed(embed_message, guild)
             else:
@@ -364,12 +388,16 @@ class EventManager:
     async def on_member_kick(self, member: discord.Member):
         if await self.config.guild(member.guild).log_member_leave():
             entry = await AuditManager.get_audit_log(member.guild, discord.AuditLogAction.kick, member)
-            user = entry.user
-            msg = "{member} has been kicked by {user}.\nReason for kick: {reason}".format(member=member.mention, user=user.mention, reason=entry.reason)
+            try:
+                user = entry.user.mention
+            except AttributeError:
+                user = "N/A"
+
+            msg = "{member} has been kicked by {user}.\nReason for kick: {reason}".format(member=member.mention, user=user, reason=entry.reason)
             embed_message = discord.Embed(title="Member Kick Log")
             embed_message.add_field(name="Member", value=member.mention)
             embed_message.add_field(name="Reason", value=entry.reason)
-            embed_message.add_field(name="Moderator", value=entry.user.mention)
+            embed_message.add_field(name="Moderator", value=user)
             if await self.config.guild(member.guild).use_embed():
                 await self.main.print_log_embed(embed_message, member.guild)
             else:
@@ -476,12 +504,15 @@ class EventManager:
             return
 
         entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-        user: discord.Member = entry.user
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
 
         msg = "{member} roles has been changed by {user}:\n"
         embed_message = discord.Embed(title="Member Role Update Log")
         embed_message.add_field(name="Member", value=after.mention)
-        embed_message.add_field(name="Moderator", value=user.mention)
+        embed_message.add_field(name="Moderator", value=user)
 
         demoted_roles = ""
         promoted_roles = ""
@@ -497,7 +528,7 @@ class EventManager:
                 msg += "Promoted to {role}\n".format(role=ar.name)
                 promoted_roles += "{role}\n".format(role=ar.name)
 
-        msg = msg.format(member=after.mention, user=user.mention)
+        msg = msg.format(member=after.mention, user=user)
 
         if demoted_roles != "":
             embed_message.add_field(name="Roles Removed", value=demoted_roles)
@@ -600,27 +631,28 @@ class EventManager:
         nickname_created = nickname_changed and before.nick is None
 
         embed_message.add_field(name="Member", value=after.mention)
+
+        entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
+
         if nickname_changed and not nickname_removed and not nickname_created:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
-            msg = "{member} nickname has been changed from **{old}** 🠆 **{new}** by {user}.".format(member=after.mention, old=before.nick, new=after.nick, user=user.mention)
+            msg = "{member} nickname has been changed from **{old}** 🠆 **{new}** by {user}.".format(member=after.mention, old=before.nick, new=after.nick, user=user)
 
             embed_message.add_field(name="Nickname Changed", value="{old} 🠆 {new}".format(old=before.nick, new=after.nick))
-            embed_message.add_field(name="Changed by", value=user.mention)
+            embed_message.add_field(name="Changed by", value=user)
         elif nickname_created:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
-            msg = "{member} nickname has been set to **{new}** by {user}.".format(member=after.mention, new=after.nick, user=user.mention)
+            msg = "{member} nickname has been set to **{new}** by {user}.".format(member=after.mention, new=after.nick, user=user)
 
             embed_message.add_field(name="Nickname Created", value="{old} 🠆 {new}".format(old=before.display_name, new=after.nick))
-            embed_message.add_field(name="Created by", value=user.mention)
+            embed_message.add_field(name="Created by", value=user)
         elif nickname_removed:
-            entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, after)
-            user: discord.Member = entry.user
-            msg = "{member} nickname has been removed by {user}.".format(member=after.mention, old=before.nick, user=user.mention)
+            msg = "{member} nickname has been removed by {user}.".format(member=after.mention, old=before.nick, user=user)
 
             embed_message.add_field(name="Nickname Removed", value="{old} 🠆 {new}".format(old=before.nick, new=after.display_name))
-            embed_message.add_field(name="Removed by", value=user.mention)
+            embed_message.add_field(name="Removed by", value=user)
 
         if await self.config.guild(guild).use_embed():
             await self.main.print_log_embed(embed_message, guild)
@@ -689,13 +721,16 @@ class EventManager:
         undeafen = before.deaf and not after.deaf
 
         entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.member_update, member)
-        user: discord.Member = entry.user
+        try:
+            user = entry.user.mention
+        except AttributeError:
+            user = "N/A"
 
         msg = ""
 
         embed_message = discord.Embed()
         embed_message.add_field(name="Member", value=member.mention)
-        embed_message.add_field(name="Moderator", value=user.mention)
+        embed_message.add_field(name="Moderator", value=user)
 
         if await self.config.guild(guild).log_mute():
             if muted:
@@ -715,7 +750,7 @@ class EventManager:
         if msg == "":
             return
 
-        msg = msg.format(member=member.mention, user=user.mention)
+        msg = msg.format(member=member.mention, user=user)
         if await self.config.guild(guild).use_embed():
             await self.main.print_log_embed(embed_message, guild)
         else:
