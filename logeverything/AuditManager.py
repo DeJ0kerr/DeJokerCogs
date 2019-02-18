@@ -22,13 +22,3 @@ class AuditManager:
         await asyncio.sleep(0.5)
         async for entry in guild.audit_logs(limit=1):
             return entry
-
-    @staticmethod
-    async def get_last_log_user(guild) -> discord.Member:
-        entry = await AuditManager.get_last_audit_entry(guild)
-        return entry.user
-
-    @staticmethod
-    async def get_last_audit_action(guild) -> discord.AuditLogAction:
-        entry = await AuditManager.get_last_audit_entry(guild)
-        return entry.action
