@@ -319,15 +319,21 @@ class EventManager:
     async def on_member_ban(self, guild: discord.Guild, member):
         if await self.config.guild(guild).log_member_ban():
             entry = await AuditManager.get_audit_log(guild, discord.AuditLogAction.ban, member)
+
             try:
                 user = entry.user.mention
             except AttributeError:
                 user = "N/A"
 
-            msg = "{member} has been banned from the guild by {user},\nReason for ban: {reason}".format(member=member.mention, reason=entry.reason, user=user)
+            try:
+                reason = entry.reason
+            except AttributeError:
+                reason = "N/A"
+
+            msg = "{member} has been banned from the guild by {user},\nReason for ban: {reason}".format(member=member.mention, reason=reason, user=user)
             embed_message = discord.Embed(title="Ban Member Log")
             embed_message.add_field(name="Banned Member", value=member.mention)
-            embed_message.add_field(name="Reason", value=entry.reason)
+            embed_message.add_field(name="Reason", value=reason)
             embed_message.add_field(name="Moderator", value=user)
             if await self.config.guild(guild).use_embed():
                 await self.main.print_log_embed(embed_message, guild)
@@ -393,10 +399,15 @@ class EventManager:
             except AttributeError:
                 user = "N/A"
 
-            msg = "{member} has been kicked by {user}.\nReason for kick: {reason}".format(member=member.mention, user=user, reason=entry.reason)
+            try:
+                reason = entry.reason
+            except AttributeError:
+                reason = "N/A"
+
+            msg = "{member} has been kicked by {user}.\nReason for kick: {reason}".format(member=member.mention, user=user, reason=reason)
             embed_message = discord.Embed(title="Member Kick Log")
             embed_message.add_field(name="Member", value=member.mention)
-            embed_message.add_field(name="Reason", value=entry.reason)
+            embed_message.add_field(name="Reason", value=reason)
             embed_message.add_field(name="Moderator", value=user)
             if await self.config.guild(member.guild).use_embed():
                 await self.main.print_log_embed(embed_message, member.guild)
