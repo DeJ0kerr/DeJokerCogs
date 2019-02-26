@@ -165,7 +165,7 @@ class EventManager:
 
     # TODO: User created/deleted/updated
     async def on_guild_emojis_update(self, guild: discord.Guild, before: list, after: list):
-        if not self.config.guild(guild).log_emojis():
+        if not await self.config.guild(guild).log_emojis():
             return
 
         msg = ""
@@ -375,11 +375,11 @@ class EventManager:
 
     async def on_member_remove(self, member: discord.Member):
         if await self.config.guild(member.guild).log_member_leave():
-            action = await AuditManager.get_last_audit_action(member.guild)
-            if action is discord.AuditLogAction.kick:
+            entry: discord.AuditLogEntry = await AuditManager.get_last_audit_entry(member.guild)
+            if entry.action is discord.AuditLogAction.kick:
                 await self.on_member_kick(member)
                 return
-            if action is discord.AuditLogAction.ban:
+            if entry.action is discord.AuditLogAction.ban:
                 return
             msg = "{member} has left the guild.".format(member=member.mention)
             embed_message = discord.Embed(title="Member Leave Log")
